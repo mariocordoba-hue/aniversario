@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Para nosotros ❤️</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#120a0e;color:#fff;font-family:Arial,sans-serif}
+section{min-height:100vh;padding:70px 7%;display:flex;align-items:center;justify-content:center;position:relative}
+h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(3.2rem,8vw,6.5rem);line-height:.95;margin:15px 0}h2{font-size:clamp(2.2rem,5vw,4rem)}
+p{line-height:1.8}.center{max-width:950px;width:100%;text-align:center}.small{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:#ffb5c9}
+.btn{display:inline-block;border:1px solid #ffffff44;background:#ffffff12;color:white;border-radius:999px;padding:14px 22px;margin:8px;cursor:pointer;text-decoration:none}.btn:hover{background:#ff5c8a}
+.hero{background:radial-gradient(circle at 50% 40%,#702740,#28111b 45%,#10080c)}
+.hero:after{content:"♥";position:absolute;font-size:40vw;color:#ff5c8a08;z-index:0}.hero>*{z-index:1}
+.heart{color:#ff5c8a}.story{background:#fff8fa;color:#27151c}
+.timeline{max-width:850px;margin:auto;text-align:left}.event{border-left:2px solid #ff9ab4;padding:0 0 30px 30px;position:relative}.event:before{content:"";position:absolute;left:-8px;top:4px;width:14px;height:14px;background:#ff5c8a;border-radius:50%}
+.love{background:linear-gradient(135deg,#24101a,#571b34)}.counter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.time{padding:18px 15px;border:1px solid #fff3;border-radius:18px;min-width:100px}.time b{font-size:1.8rem;display:block}.time span{font-size:.7rem;opacity:.7}
+.letter{background:#fff8fa;color:#25151b}.card{background:#fff;border-radius:25px;padding:40px;max-width:850px;text-align:left;box-shadow:0 20px 60px #0003}
+.gallery{background:#10080c}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}.photo{aspect-ratio:1;border-radius:20px;overflow:hidden;background:#2a1520;display:flex;align-items:center;justify-content:center;color:#ffffff88}.photo img{width:100%;height:100%;object-fit:cover}
+.surprise{background:radial-gradient(circle,#762846,#210c15 65%)}#surpriseMsg{font-size:1.3rem;margin:25px auto;max-width:700px}
+footer{text-align:center;padding:25px;color:#ffffff88;font-size:.75rem;background:#090608}
+#editBtn{position:fixed;right:18px;bottom:18px;z-index:100;background:#ff5c8a;color:white;border:0;border-radius:50px;padding:14px 20px;box-shadow:0 8px 30px #0007;cursor:pointer}
+#editor{position:fixed;inset:0;background:#120a0ef2;z-index:200;display:none;overflow:auto;padding:25px}
+#editor.open{display:block}.panel{max-width:850px;margin:auto;background:#fff;color:#24151b;border-radius:24px;padding:28px}
+.field{margin:16px 0}.field label{display:block;font-weight:bold;margin-bottom:7px}.field input,.field textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font:inherit}.field textarea{min-height:100px;resize:vertical}
+.photoEdit{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}.photoSlot{border:2px dashed #ddd;border-radius:14px;padding:10px;text-align:center}.photoSlot img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px;margin-bottom:8px}
+.notice{background:#fff0f4;padding:12px;border-radius:12px;margin:10px 0;font-size:.9rem}.danger{background:#fee;border:0}.actions{position:sticky;bottom:0;background:#fff;padding-top:15px;display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div class="center">
+<div class="small" id="heroDate"></div>
+<h1 id="heroTitle"></h1>
+<p id="heroSubtitle"></p>
+<a class="btn" href="#historia">Empezar nuestra historia ↓</a>
+</div></section>
+
+<section id="historia" class="story"><div class="center">
+<div class="small">Nuestra historia</div><h2 id="storyTitle"></h2>
+<div class="timeline" id="timeline"></div>
+</div></section>
+
+<section class="love"><div class="center">
+<div class="small">El tiempo contigo</div><h2>Desde el comienzo ❤️</h2><p id="counterText"></p>
+<div class="counter"><div class="time"><b id="years">0</b><span>AÑOS</span></div><div class="time"><b id="days">0</b><span>DÍAS</span></div><div class="time"><b id="hours">0</b><span>HORAS</span></div><div class="time"><b id="minutes">0</b><span>MINUTOS</span></div><div class="time"><b id="seconds">0</b><span>SEGUNDOS</span></div></div>
+</div></section>
+
+<section class="letter"><div class="card"><div class="small">Lo que siento por ti</div><h2 id="letterTitle"></h2><div id="letterText"></div></div></section>
+
+<section class="gallery"><div class="center"><div class="small">Nuestros recuerdos</div><h2 id="galleryTitle"></h2><div class="grid" id="gallery"></div></div></section>
+
+<section class="surprise"><div class="center"><div class="small">Tengo algo para ti...</div><h2 id="surpriseTitle"></h2><p id="surpriseIntro"></p><button class="btn" onclick="openSurprise()">Abrir mi sorpresa 💌</button><div id="surpriseMsg" style="display:none"></div></div></section>
+<footer id="footer"></footer>
+
+<button id="editBtn" onclick="openEditor()">✏️ Editar página</button>
+
+<div id="editor">
+<div class="panel">
+<h2>✏️ Personaliza vuestra página</h2>
+<div class="notice">Aquí puedes cambiar los textos y añadir fotos sin tocar ningún código. Pulsa <b>Guardar cambios</b> al terminar.</div>
+<div id="fields"></div>
+<h3>📸 Fotos</h3><p>Selecciona una foto para cada hueco. Las fotos se guardan en este navegador.</p>
+<div class="photoEdit" id="photoEditor"></div>
+<div class="actions"><button class="btn" style="background:#ff5c8a" onclick="saveAll()">💾 Guardar cambios</button><button class="btn" style="background:#555" onclick="closeEditor()">Cerrar</button><button class="btn danger" onclick="resetAll()">Restablecer plantilla</button></div>
+</div></div>
+
+<script>
+const START="2023-09-05T00:34:00";
+const defaultData={
+heroDate:"5 de septiembre de 2023 · 00:34",
+heroTitle:"Para ti,<br><span class='heart'>mi persona favorita.</span>",
+heroSubtitle:"Hay historias que empiezan con una fecha. La nuestra empezó a las 00:34.",
+storyTitle:"Desde aquella noche...",
+events:[
+["5 septiembre 2023 · 00:34","El comienzo","Aquí puedes contar cómo empezó todo, qué sentiste y qué recuerdas de aquella noche."],
+["Nuestra primera cita","Un recuerdo especial","Cuenta aquí vuestra primera cita y ese momento que todavía recuerdas con una sonrisa."],
+["Nuestro primer aniversario","Un año de nosotros","Añade aquí vuestro recuerdo favorito de vuestro primer aniversario."],
+["Hoy","Y seguimos escribiendo...","Porque lo mejor de nuestra historia es que todavía no sabemos cómo termina."]
+],
+counterText:"Y cada segundo desde las 00:34 ha sido parte de nuestra historia.",
+letterTitle:"Una carta para ti ❤️",
+letterText:"<p>Mi amor,</p><p>Aquí puedes escribir todo aquello que quizá no dices todos los días, pero que quieres que recuerde para siempre.</p><p>Gracias por cada risa, cada abrazo, cada conversación y cada momento que hemos compartido.</p><p><strong>Te quiero más de lo que cabe en una página web.</strong></p><p>— Tu chico ❤️</p>",
+galleryTitle:"Momentos que quiero guardar para siempre",
+surpriseTitle:"¿Preparada?",
+surpriseIntro:"Hay una última sorpresa escondida aquí.",
+surpriseMsg:"Si pudiera volver al 5 de septiembre de 2023 a las 00:34, te volvería a elegir sin pensármelo.<br><br><strong>Feliz aniversario, mi amor. ❤️</strong>",
+footer:"Hecho con ❤️ para nuestra historia · 05.09.2023 · 00:34",
+photos:[null,null,null,null,null,null]
+};
+let data=JSON.parse(localStorage.getItem("anniversaryData")||"null")||defaultData;
+
+function render(){
+document.getElementById("heroDate").innerHTML=data.heroDate;
+document.getElementById("heroTitle").innerHTML=data.heroTitle;
+document.getElementById("heroSubtitle").innerHTML=data.heroSubtitle;
+document.getElementById("storyTitle").innerHTML=data.storyTitle;
+document.getElementById("counterText").innerHTML=data.counterText;
+document.getElementById("letterTitle").innerHTML=data.letterTitle;
+document.getElementById("letterText").innerHTML=data.letterText;
+document.getElementById("galleryTitle").innerHTML=data.galleryTitle;
+document.getElementById("surpriseTitle").innerHTML=data.surpriseTitle;
+document.getElementById("surpriseIntro").innerHTML=data.surpriseIntro;
+document.getElementById("surpriseMsg").innerHTML=data.surpriseMsg;
+document.getElementById("footer").innerHTML=data.footer;
+document.getElementById("timeline").innerHTML=data.events.map(e=>`<div class="event"><div class="small">${e[0]}</div><h3>${e[1]}</h3><p>${e[2]}</p></div>`).join("");
+document.getElementById("gallery").innerHTML=data.photos.map((p,i)=>`<div class="photo">${p?`<img src="${p}">`:`📷 Foto ${i+1}`}</div>`).join("");
+}
+function openSurprise(){document.getElementById("surpriseMsg").style.display="block"}
+function updateCounter(){
+let now=new Date(), start=new Date(START), years=now.getFullYear()-start.getFullYear(), ann=new Date(start);
+ann.setFullYear(start.getFullYear()+years); if(now<ann)years--;
+let diff=now-start;
+document.getElementById("years").textContent=years;
+document.getElementById("days").textContent=Math.floor(diff/86400000);
+document.getElementById("hours").textContent=Math.floor(diff/3600000)%24;
+document.getElementById("minutes").textContent=Math.floor(diff/60000)%60;
+document.getElementById("seconds").textContent=Math.floor(diff/1000)%60;
+}
+const textFields=[
+["heroDate","Fecha de inicio (texto)","input"],["heroTitle","Título de portada (puedes usar <br>)","textarea"],
+["heroSubtitle","Frase de portada","textarea"],["storyTitle","Título de vuestra historia","input"],
+["counterText","Texto del contador","textarea"],["letterTitle","Título de la carta","input"],["letterText","Carta de amor (puedes usar <p>)","textarea"],
+["galleryTitle","Título de las fotos","input"],["surpriseTitle","Título de la sorpresa","input"],["surpriseIntro","Texto antes del botón","textarea"],
+["surpriseMsg","Mensaje que aparece al abrir la sorpresa","textarea"],["footer","Texto inferior","input"]
+];
+function openEditor(){
+document.getElementById("editor").classList.add("open");
+let f=document.getElementById("fields"); f.innerHTML="";
+textFields.forEach(([k,l,t])=>{f.innerHTML+=`<div class="field"><label>${l}</label>${t==="textarea"?`<textarea id="ed_${k}">${escapeHtml(data[k])}</textarea>`:`<input id="ed_${k}" value="${escapeAttr(data[k])}">`}</div>`});
+f.innerHTML+=`<h3>📖 Momentos de la historia</h3>`;
+data.events.forEach((e,i)=>{f.innerHTML+=`<div class="field"><label>Fecha / momento ${i+1}</label><input id="evd${i}" value="${escapeAttr(e[0])}"><label>Título</label><input id="evt${i}" value="${escapeAttr(e[1])}"><label>Descripción</label><textarea id="evx${i}">${escapeHtml(e[2])}</textarea></div>`});
+let pe=document.getElementById("photoEditor"); pe.innerHTML="";
+data.photos.forEach((p,i)=>{pe.innerHTML+=`<div class="photoSlot">${p?`<img src="${p}" id="preview${i}">`:`<div id="preview${i}" style="aspect-ratio:1;display:flex;align-items:center;justify-content:center">📷</div>`}<input type="file" accept="image/*" onchange="loadPhoto(event,${i})"><button class="btn" onclick="removePhoto(${i})">Quitar</button></div>`});
+}
+function loadPhoto(ev,i){let file=ev.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{data.photos[i]=r.result;openEditor()};r.readAsDataURL(file)}
+function removePhoto(i){data.photos[i]=null;openEditor()}
+function saveAll(){
+textFields.forEach(([k])=>data[k]=document.getElementById("ed_"+k).value);
+data.events=data.events.map((e,i)=>[document.getElementById("evd"+i).value,document.getElementById("evt"+i).value,document.getElementById("evx"+i).value]);
+try{localStorage.setItem("anniversaryData",JSON.stringify(data));render();closeEditor();alert("¡Guardado! ❤️")}catch(e){alert("El navegador se ha quedado sin espacio. Prueba con menos fotos o fotos más pequeñas.")}
+}
+function resetAll(){if(confirm("¿Seguro que quieres borrar tus cambios y volver a la plantilla?")){data=JSON.parse(JSON.stringify(defaultData));localStorage.removeItem("anniversaryData");render();openEditor()}}
+function closeEditor(){document.getElementById("editor").classList.remove("open")}
+function escapeHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function escapeAttr(s){return escapeHtml(s).replace(/"/g,"&quot;")}
+render();updateCounter();setInterval(updateCounter,1000);
+</script>
+</body>
+</html>
